@@ -1,0 +1,20 @@
+trigger:
+- master
+ 
+pool:
+  vmImage: 'ubuntu-latest'
+ 
+steps:
+- task: GoTool@0
+  inputs:
+    version: '1.22.3'
+- script: |
+    go build -o myapp
+  displayName: 'Build Go executable'
+ 
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(System.DefaultWorkingDirectory)/myapp'
+    artifactName: 'myapp'
+    publishLocation: 'Container'
+ 
